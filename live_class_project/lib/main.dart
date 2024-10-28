@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// Gridview, ListTile, Form, GlobalKey, Key
+// ListView.Separator, Container
 
 void main() {
   runApp(HelloWorldApp());
@@ -27,17 +27,13 @@ class Home extends StatelessWidget {
     'Hasan',
     'Roy',
     'Niloy',
-    'Niloy',
-    'Niloy',
-    'Niloy',
-    'Niloy',
-    'Niloy',
-    'Niloy',
-    'Niloy',
+    'Hasan',
+    'Fahad',
+    'Nilly',
+    'Touhid',
+    'Mony',
+    'Random',
   ];
-  TextEditingController _emailTEController = TextEditingController();
-  TextEditingController _passwordTEController = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,110 +42,80 @@ class Home extends StatelessWidget {
         title: Text('Home'),
         backgroundColor: Colors.green,
       ),
-      // body: ListView.builder(
-      //   itemCount: friendList.length,
-      //   itemBuilder: (context, index) {
-      //     return ListTile(
-      //       title: Text(friendList[index]),
-      //       subtitle: Text('Friend no $index'),
-      //       trailing: Icon(Icons.arrow_forward),
-      //       leading: CircleAvatar(
-      //         child: Icon(Icons.person),
-      //       ),
-      //       onTap: () {
-      //         print('on tap $index');
-      //       },
-      //       onLongPress: () {
-      //         print('on long press $index');
-      //       },
-      //       // tileColor: Colors.white10,
-      //       contentPadding: EdgeInsets.symmetric(
-      //         horizontal: 24,
-      //         vertical: 4
-      //       ),
-      //       // enabled: false,
-      //       dense: false, // TODO: need to explain
-      //       titleTextStyle: TextStyle(
-      //         fontSize: 24,
-      //         color: Colors.pink
-      //       ),
-      //       subtitleTextStyle: TextStyle(
-      //         fontSize: 12,
-      //         color: Colors.blue
-      //       ),
-      //       // selected: true,
-      //       // selectedColor: Colors.pink,
-      //     );
-      //   },
-      // ),
-      // body: GridView(
-      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //     crossAxisCount: 2,
-      //     mainAxisSpacing: 12,
-      //     crossAxisSpacing: 8
-      //   ),
-      //   children: [
-      //     Text('dsfdf'),
-      //     Text('dsfdf'),
-      //     Text('dsfdf'),
-      //     Text('dsfdf'),
-      //   ],
-      // ),
-      // body: GridView.builder(
-      //     gridDelegate:
-      //         SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
-      //     itemCount: friendList.length,
-      //     itemBuilder: (context, index) {
-      //       return Center(child: Text(friendList[index]));
-      //     },
-      // ),
-      body: Padding(
-        key: Key('my-padding-key'),
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
+/*      body: ListView.separated(
+        itemCount: friendList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
             children: [
-              TextFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: _emailTEController,
-                decoration: InputDecoration(hintText: 'Email'),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter your email';
-                  }
-                  return null;
-                },
+              Text(friendList[index]),
+              // Divider(
+              //   height: 20,
+              //   thickness: 2,
+              //   color: Colors.grey,
+              //   indent: 10,
+              //   endIndent: 16,
+              // ),
+            ],
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return Divider(
+            color: Colors.grey,
+            endIndent: 16,
+          );
+        }
+      ),*/
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 100,
+                height: 100,
+                margin: EdgeInsets.only(left: 24),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: Colors.pink.withOpacity(0.4),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 2), // changes position of shadow
+                    ),
+                  ]
+                ),
               ),
-              TextFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: _passwordTEController,
-                decoration: InputDecoration(hintText: 'Password'),
-                validator: (String? value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'Enter your password';
-                  }
-                  return null;
-                },
+              Column(
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(8),
+                    margin: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      border: Border.all(color: Colors.black, width: 2),
+                      // borderRadius: BorderRadius.circular(16)
+                      // borderRadius: BorderRadius.only(
+                      //   topLeft: Radius.circular(16),
+                      //   bottomRight: Radius.circular(16)
+                      // ),
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/shoe.jpg'),
+                        fit: BoxFit.cover,
+                        opacity: 0.3,
+                      ),
+                    ),
+                    child: Text('Random'),
+                  ),
+                  Text('Shoe')
+                ],
               ),
-              ElevatedButton(
-                onPressed: () {
-                  // String email = _emailTEController.text;
-                  // String password = _passwordTEController.text;
-                  // if (email.isNotEmpty && password.isNotEmpty) {
-                  //   print('Login success');
-                  // } else {
-                  //   print('Login failed. Missing data');
-                  // }
-                  if (_formKey.currentState!.validate()) {
-                    print('Login success');
-                  }
-                },
-                child: Text('Tap'),
-              )
             ],
           ),
-        ),
+        ],
       ),
     );
   }
