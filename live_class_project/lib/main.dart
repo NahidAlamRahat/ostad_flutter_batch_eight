@@ -1,9 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:device_preview/device_preview.dart';
 
-/// MediaQuery | Wrap | LayoutBuilder | OrientationBuilder
+/// Aspect Ratio | Expanded | Flexible | FractionallySizedBox
 
 void main() {
-  runApp(const SimpleApp());
+  runApp(
+    DevicePreview(
+      enabled: kDebugMode,
+      builder: (BuildContext context) => SimpleApp(),
+    ),
+  );
 }
 
 class SimpleApp extends StatelessWidget {
@@ -18,6 +25,8 @@ class SimpleApp extends StatelessWidget {
       //   '/profile': (context) => Profile(),
       //   '/settings': (context) => Settings(),
       // },
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       home: Home(),
     );
   }
@@ -28,66 +37,78 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
-    // Size screenSize = MediaQuery.sizeOf(context);
-    print(screenSize.width);
-    print(screenSize.height);
-    print(screenSize.flipped);
-    print(screenSize.aspectRatio);
-    print(screenSize.longestSide);
-    print(screenSize.shortestSide);
-
-    print(MediaQuery.of(context).devicePixelRatio);
-    print(MediaQuery.of(context).orientation);
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
-      // body: Column(
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   children: [
-      //     Wrap(
-      //       alignment: WrapAlignment.center,
-      //       crossAxisAlignment: WrapCrossAlignment.start,
-      //       spacing: 8,
-      //       runSpacing: 8,
-      //       children: [
-      //         ElevatedButton(onPressed: () {}, child: Text('Button')),
-      //         ElevatedButton(onPressed: () {}, child: Text('Button')),
-      //         ElevatedButton(onPressed: () {}, child: Text('Button')),
-      //         ElevatedButton(onPressed: () {}, child: Text('Button')),
-      //         ElevatedButton(onPressed: () {}, child: Text('Button')),
-      //         ElevatedButton(onPressed: () {}, child: Text('Button')),
-      //         ElevatedButton(onPressed: () {}, child: Text('Button')),
-      //         ElevatedButton(onPressed: () {}, child: Text('Button')),
-      //         ElevatedButton(onPressed: () {}, child: Text('Button')),
-      //         ElevatedButton(onPressed: () {}, child: Text('Button')),
-      //         ElevatedButton(onPressed: () {}, child: Text('Button')),
-      //         ElevatedButton(onPressed: () {}, child: Text('Button')),
-      //         ElevatedButton(onPressed: () {}, child: Text('Button')),
-      //       ],
-      //     )
-      //   ],
+      // appBar: AppBar(
+      //   title: Text('Home'),
       // ),
-      // body: Padding(
-      //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      //   child: LayoutBuilder(
-      //     builder: (BuildContext context, BoxConstraints constraints) {
-      //       return Center(
-      //         child: Text('${constraints.maxHeight} ${constraints.maxWidth}'),
-      //       );
-      //     }
-      //   ),
+      // body: FractionallySizedBox(
+      //   heightFactor: 0.5,
+      //   widthFactor: 0.75,
+      //   alignment: Alignment(0, 0),
+      //   child: ColoredBox(color: Colors.red),
       // ),
-      body: OrientationBuilder(
-        builder: (context, orientation) {
-          if (orientation == Orientation.portrait) {
-            return Center(child: Text('Hello World'));
-          } else {
-            return Center(child: Text('Hello another world'));
-          }
-        },
+      // body: AspectRatio(
+      //   aspectRatio: 16 / 9,
+      //   child: ColoredBox(color: Colors.orange),
+      // ),
+/*      body: Column(
+        children: [
+          Flexible(
+            fit: FlexFit.tight,
+            flex: 4,
+            child: SizedBox(
+              width: double.maxFinite,
+              height: 100,
+              child: ColoredBox(color: Colors.black),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              width: double.maxFinite,
+              height: 100,
+              child: ColoredBox(color: Colors.orange),
+            ),
+          ),
+          SizedBox(
+            width: double.maxFinite,
+            height: 50,
+            child: ColoredBox(color: Colors.red),
+          ),
+          // ColoredBox(color: Colors.orange),
+        ],
+      ),*/
+      body: SafeArea(
+        top: true,
+        bottom: false,
+        child: Tooltip(
+          message: 'This is a row',
+          exitDuration: Duration(seconds: 2),
+          triggerMode: TooltipTriggerMode.tap,
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  color: Colors.orange,
+                  height: 100,
+                ),
+              ),
+              Expanded(
+                flex: 4,
+                child: Container(
+                  color: Colors.red,
+                  height: 100,
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.green,
+                  height: 100,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
