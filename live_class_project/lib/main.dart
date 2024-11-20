@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
-/// Aspect Ratio | Expanded | Flexible | FractionallySizedBox
+/// Responsive Builder
 
 void main() {
   runApp(
@@ -19,12 +20,6 @@ class SimpleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // initialRoute: '/',
-      // routes: {
-      //   '/': (context) => Home(),
-      //   '/profile': (context) => Profile(),
-      //   '/settings': (context) => Settings(),
-      // },
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       home: Home(),
@@ -32,82 +27,45 @@ class SimpleApp extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Home'),
-      // ),
-      // body: FractionallySizedBox(
-      //   heightFactor: 0.5,
-      //   widthFactor: 0.75,
-      //   alignment: Alignment(0, 0),
-      //   child: ColoredBox(color: Colors.red),
-      // ),
-      // body: AspectRatio(
-      //   aspectRatio: 16 / 9,
-      //   child: ColoredBox(color: Colors.orange),
-      // ),
-/*      body: Column(
-        children: [
-          Flexible(
-            fit: FlexFit.tight,
-            flex: 4,
-            child: SizedBox(
-              width: double.maxFinite,
-              height: 100,
-              child: ColoredBox(color: Colors.black),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: SizedBox(
-              width: double.maxFinite,
-              height: 100,
-              child: ColoredBox(color: Colors.orange),
-            ),
-          ),
-          SizedBox(
-            width: double.maxFinite,
-            height: 50,
-            child: ColoredBox(color: Colors.red),
-          ),
-          // ColoredBox(color: Colors.orange),
-        ],
-      ),*/
-      body: SafeArea(
-        top: true,
-        bottom: false,
-        child: Tooltip(
-          message: 'This is a row',
-          exitDuration: Duration(seconds: 2),
-          triggerMode: TooltipTriggerMode.tap,
-          child: Row(
-            children: [
-              Expanded(
-                child: Container(
-                  color: Colors.orange,
-                  height: 100,
-                ),
-              ),
-              Expanded(
-                flex: 4,
-                child: Container(
-                  color: Colors.red,
-                  height: 100,
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  color: Colors.green,
-                  height: 100,
-                ),
-              ),
-            ],
-          ),
+      appBar: AppBar(
+        title: const Text('Home'),
+      ),
+      body: Center(
+        // child: ResponsiveBuilder(
+        //   builder: (context, sizingInformation) {
+        //     if (sizingInformation.isDesktop) {
+        //       return const Text('Desktop');
+        //     } else if (sizingInformation.isExtraLarge) {
+        //       return const Text('ExtraLarge');
+        //     } else if (sizingInformation.isLarge) {
+        //       return const Text('LargeDesktop');
+        //     } else if (sizingInformation.isTablet) {
+        //       return const Text('Tablet');
+        //     } else if (sizingInformation.isMobile) {
+        //       return const Text('Mobile');
+        //     } else if (sizingInformation.isWatch) {
+        //       return const Text('Watch');
+        //     }
+        //
+        //     return const Text('Unknown');
+        //   }
+        // ),
+        child: ScreenTypeLayout.builder(
+          mobile: (context) => const Text('Mobile'),
+          desktop: (context) => const Text('Desktop'),
+          tablet: (context) => const Text('Tablet'),
+          watch: (context) => const Text('Watch'),
         ),
       ),
     );
